@@ -1,13 +1,10 @@
 package br.com.erudio.controller
 
-import java.util.concurrent.atomic.AtomicLong
-import br.com.erudio.exceptions.UnsupportedMathOperationException
-import br.com.erudio.converters.NumberConverter
-import br.com.erudio.math.SimpleMath
-import br.com.erudio.model.PersonModel
+import br.com.erudio.data.vo.v1.PersonVO
 import br.com.erudio.services.PersonService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,36 +14,32 @@ class PersonController {
     @Autowired
     private lateinit var service: PersonService
 
-    @RequestMapping(method = [RequestMethod.GET],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun findAll(): List<PersonModel> {
+    @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun findAll(): List<PersonVO> {
         return  service.findAll()
     }
 
-    @RequestMapping(value = ["{id}"], method = [RequestMethod.GET],
-                    produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(value = ["{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findById(@PathVariable(value = "id")id: Long
-            ): PersonModel {
+            ): PersonVO {
         return  service.findById((id))
     }
 
-    @RequestMapping(method = [RequestMethod.POST],
-                    consumes = [MediaType.APPLICATION_JSON_VALUE],
-                    produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun create(@RequestBody person: PersonModel): PersonModel {
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE],
+                 produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun create(@RequestBody person: PersonVO): PersonVO {
         return  service.create(person)
     }
 
-    @RequestMapping(method = [RequestMethod.PUT],
-                    consumes = [MediaType.APPLICATION_JSON_VALUE],
-                    produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun update(@RequestBody person: PersonModel): PersonModel {
+    @PutMapping(consumes = [MediaType.APPLICATION_JSON_VALUE],
+                produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun update(@RequestBody person: PersonVO): PersonVO {
         return  service.update(person)
     }
 
-    @RequestMapping(value = ["{id}"], method = [RequestMethod.DELETE],
-        produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun delete(@PathVariable(value = "id")id: Long) {
+    @DeleteMapping(value = ["{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun delete(@PathVariable(value = "id")id: Long) : ResponseEntity<*>{
         service.delete(id)
+        return ResponseEntity.noContent().build<Any>()
     }
 }
