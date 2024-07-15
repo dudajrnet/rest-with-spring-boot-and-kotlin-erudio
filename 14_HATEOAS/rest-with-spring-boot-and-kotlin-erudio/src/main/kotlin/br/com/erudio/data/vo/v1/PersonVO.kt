@@ -3,16 +3,15 @@ package br.com.erudio.data.vo.v1
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import com.github.dozermapper.core.Mapping
 import jakarta.persistence.*
+import org.springframework.hateoas.RepresentationModel
 
-@JsonPropertyOrder("id", "adress", "firstName", "lastName", "gender")
 data class PersonVO (
-    var id: Long = 0,
-    @field:JsonProperty("first_name")
+    @Mapping("id")
+    var key: Long =  0,
     var firstName: String = "",
-    @field:JsonProperty("last_name")
     var lastName: String = "",
     var adress: String = "",
-    @field:JsonIgnore
     var gender: String = ""
-)
+): RepresentationModel<PersonVO>()

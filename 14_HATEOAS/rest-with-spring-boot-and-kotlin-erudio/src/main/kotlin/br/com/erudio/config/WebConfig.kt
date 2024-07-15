@@ -5,7 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
-import br.com.erudio.serialization.converter.YamlJackson2HttpMessageConverter
+import br.com.erudio.serilization.converter.YamlJackson2HttpMessageConverter
 
 @Configuration
 class WebConfig : WebMvcConfigurer {
